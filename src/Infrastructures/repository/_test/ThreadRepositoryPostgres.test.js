@@ -90,23 +90,5 @@ describe('ThreadRepositoryPostgres', () => {
       expect(foundThread).toEqual(addedThread);
     });
   });
-
-  describe('getIdByUsername', () => {
-    it('should throw InvariantError when user not found', async () => {
-      // Arrange
-      
-      // Action & Assert
-      
-    });
-
-    it('should return user id correctly', async () => {
-      // Arrange
-      
-      // Action
-      
-      // Assert
-      
-    });
-  });
 });
 

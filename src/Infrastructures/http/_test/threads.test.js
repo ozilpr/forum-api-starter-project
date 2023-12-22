@@ -48,59 +48,58 @@ describe('/threads endpoint', () => {
     });
 
     it('should response 400 when request payload not contain needed property', async () => {
-    //   // Arrange
-    //   const server = await createServer(container);
+      // Arrange
+      const payload = {
+        title: 'thread',
+      }
+      
+      // eslint-disable-next-line no-undef
+      const server = await createServer(container);
+      const { accessToken } = await ServerTestHelper.getAccessTokenAndUserId({ server });
+      
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/threads',
+        payload: payload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    //   // await UsersTableTestHelper.addUser({
-    //   //   id: 'user-123',
-    //   //   username: 'dicoding',
-    //   // });
-
-    //   const payload = {
-    //     title: 'thread',
-    //     body: 'isi thread',
-    //   };
-
-    //   const { accessToken } = await ServerTestHelper.getAccessToken({ server });
-
-    //   // Action
-    //   const response = await server.inject({
-    //     method: 'POST',
-    //     url: '/threads',
-    //     payload: payload,
-    //     headers: {
-    //       Authorization: `Bearer ${accessToken}`,
-    //     },
-    //   });
-
-    //   // Assert
-    //   const responseJson = JSON.parse(response.payload);
-    //   expect(response.statusCode).toEqual(400);
-    //   expect(responseJson.status).toEqual('fail');
-    //   expect(responseJson.message).toEqual('tidak dapat membuat thread baru karena property yang dibutuhkan tidak ada');
+      // Assert
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(400);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual('tidak dapat membuat thread baru karena property yang dibutuhkan tidak ada');
     });
 
     it('should response 400 when request payload not meet data type specification', async () => {
-    //   // Arrange
-    //   const requestPayload = {
-    //     username: 'dicoding',
-    //     password: 'secret',
-    //     fullname: ['Dicoding Indonesia'],
-    //   };
-    //   const server = await createServer(container);
+      // Arrange
+      const payload = {
+        title: 'thread',
+        body: ['isi thread'],
+      }
+      
+      // eslint-disable-next-line no-undef
+      const server = await createServer(container);
+      const { accessToken } = await ServerTestHelper.getAccessTokenAndUserId({ server });
+      
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/threads',
+        payload: payload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    //   // Action
-    //   const response = await server.inject({
-    //     method: 'POST',
-    //     url: '/users',
-    //     payload: requestPayload,
-    //   });
-
-    //   // Assert
-    //   const responseJson = JSON.parse(response.payload);
-    //   expect(response.statusCode).toEqual(400);
-    //   expect(responseJson.status).toEqual('fail');
-    //   expect(responseJson.message).toEqual('tidak dapat membuat user baru karena tipe data tidak sesuai');
+      // Assert
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(400);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual('tidak dapat membuat thread baru karena tipe data tidak sesuai');
     });
 
     it('should response 400 when username more than 50 character', async () => {
