@@ -1,8 +1,8 @@
 const routes = (handler) => ([
   {
     method: 'POST',
-    path: '/threads',
-    handler: handler.postThreadHandler,
+    path: '/threads/{threadId}/comments/{commentId}',
+    handler: handler.postCommentHandler,
   },
   // {
   //   method: 'GET',

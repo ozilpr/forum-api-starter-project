@@ -1,12 +1,11 @@
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const PostThread = require('../../../Domains/threads/entities/PostThread');
-const AddedThread = require('../../../Domains/threads/entities/AddedThread');
 const pool = require('../../database/postgres/pool');
 const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
-const UserRepository = require('../../../Domains/users/UserRepository');
-const UserRepositoryPostgres = require('../UserRepositoryPostgres');
+const AddedThread = require('../../../Domains/threads/entities/AddedThread');
+
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
@@ -41,9 +40,14 @@ describe('ThreadRepositoryPostgres', () => {
 
       // Action
       const addedThread = await threadRepositoryPostgres.addThread(postThread);
+      const threads = await ThreadsTableTestHelper.findThreadById(addedThread.id);
 
       // Assert
-      const threads = await ThreadsTableTestHelper.findThreadById(addedThread.id);
+      expect(addedThread).toStrictEqual(new AddedThread({
+        id: `thread-${fakeIdGenerator()}`,
+        title: postThread.title,
+        owner: postThread.owner,
+      }));
       expect(threads).toHaveLength(1);
     });
   });
